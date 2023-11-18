@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<h1 class="text-center">{{ product.name }}</h1>
+
+{% comment %}
+<p>{{ product.description }}</p>
+<p>Price: ${{ product.price }}</p>
+<h2>Variants</h2>
+<ul>
+  {% for variant in product.productvariant_set.all %}
+  <li>{{ variant.name }}</li>
+  {% endfor %}
+</ul>
+{% endcomment %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card" style="width: 18rem">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+        {% else %}
+
+        <img
+          src="{% static 'images/default_images/default_product_image.jpg' %}"
+          alt="{{ product.name }}"
+        />
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+        </div>
+        <p>Price: ${{ product.price }}</p>
+        <h2>Options</h2>
+        <ul class="list-group list-group-flush">
+          {% for variant in product.productvariant_set.all %}
+          <li class="list-group-item">{{ variant.name }}</li>
+          {% endfor %}
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">Add to Cart</a>
+        </div>
+      </div>
+      {% endblock content %}
+    </div>
+  </div>
+</div>
