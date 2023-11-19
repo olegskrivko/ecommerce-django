@@ -19,10 +19,7 @@
         <img src="{{ product.image.url }}" alt="{{ product.name }}" />
         {% else %}
 
-        <img
-          src="{% static 'images/default_images/default_product_image.jpg' %}"
-          alt="{{ product.name }}"
-        />
+        <img src="{% static 'images/default_images/default_product_image.jpg' %}" alt="{{ product.name }}" />
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
@@ -36,7 +33,7 @@
           {% endfor %}
         </ul>
         <div class="card-body">
-          <a href="#" class="card-link">Add to Cart</a>
+          <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="card-link">Add to Cart</a>
         </div>
       </div>
       {% endblock content %}

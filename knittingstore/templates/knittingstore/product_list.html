@@ -1,0 +1,67 @@
+{% comment %} {% extends 'base.html' %} {% load static %} {% block content %}
+<form method="GET" action="{% url 'knittingstore:product-list' category.slug %}">
+  <label for="gender">Gender:</label>
+  <select name="gender" id="gender">
+    <option value="">All</option>
+    <option value="M">Male</option>
+    <option value="F">Female</option>
+    <option value="U">Unisex</option>
+  </select>
+
+  <label for="age_group">Age Group:</label>
+  <select name="age_group" id="age_group">
+    <option value="">All</option>
+    <option value="T">Toddler</option>
+    <option value="C">Children</option>
+    <option value="A">Adult</option>
+  </select>
+
+  <label for="difficulty">Difficulty:</label>
+  <select name="difficulty" id="difficulty">
+    <option value="">All</option>
+    <option value="B">Beginner</option>
+    <option value="I">Intermediate</option>
+    <option value="E">Expert</option>
+  </select>
+
+  <label for="product_type">Type:</label>
+  <select name="product_type" id="product_type">
+    <option value="">All</option>
+    <option value="H">Hat</option>
+    <option value="S">Scarf</option>
+    <option value="C">Coat</option>
+    <option value="SW">Sweater</option>
+    <!-- Add other types -->
+  </select>
+
+  <input type="submit" value="Filter" />
+</form>
+<h1 class="text-center">{{ category.name }}</h1>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for product in filtered_products %}
+      <div class="col">
+        <div class="card shadow-sm">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+          {% else %}
+          <img src="{% static 'images/default_images/default_product_image.jpg' %}" alt="{{ product.name }}" />
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text">Price: ${{ product.price }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="{% url 'knittingstore:product-detail' category.slug product.slug %}">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %} {% endcomment %}

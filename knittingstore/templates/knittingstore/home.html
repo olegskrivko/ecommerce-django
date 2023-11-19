@@ -1,3 +1,8 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Home page</h1>
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="container mb-3">
+  <!-- seasonal_block.html -->
+  {% include 'knittingstore/seasonal_block.html' %}
+</div>
+
 {% endblock content %}
