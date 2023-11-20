@@ -6,6 +6,7 @@ from .models import Category, Product
 from django.http import HttpResponseRedirect
 from django.contrib.sessions.models import Session
 from decimal import Decimal
+from django.db.models import Q
 import json
 # Create your views here.
 
@@ -26,20 +27,37 @@ class CategoryListView(ListView):
     template_name = 'knittingstore/category_list.html'
     context_object_name = 'categories'
 
-class CategoryDetailView(DetailView):
-    model = Category
-    template_name = 'knittingstore/category_detail.html'
-    slug_url_kwarg = 'category_slug'
-    context_object_name = 'category'
-
 class ProductListView(ListView):
     model = Product
     template_name = 'knittingstore/product_list.html'
     context_object_name = 'products'
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         category_slug = self.kwargs['category_slug']
-        return Product.objects.filter(category__slug=category_slug)
+        context['category_slug'] = category_slug
+
+        # Retrieve filter values from the GET request
+        age_group = self.request.GET.get('age_group')
+        difficulty = self.request.GET.get('difficulty')
+        product_type = self.request.GET.get('product_type')
+
+        # Apply filters if values are provided in the request
+        filtered_products = Product.objects.filter(category__slug=category_slug)
+        if age_group:
+            filtered_products = filtered_products.filter(age_group=age_group)
+        if difficulty:
+            filtered_products = filtered_products.filter(difficulty_level=difficulty)
+        if product_type:
+            filtered_products = filtered_products.filter(product_type=product_type)
+
+        context['products'] = filtered_products
+        return context
+
+    def get_queryset(self):
+        # This method is not used when filtering in get_context_data
+        return Product.objects.none()  # Return an empty queryset since filtering is done in get_context_data
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -84,13 +102,6 @@ class RemoveFromCartView(View):
         # Redirect to the cart page after removal
         return HttpResponseRedirect(reverse('knittingstore:cart'))
 
-# class CheckoutView(View):
-#     def get(self, request):
-#         # Fetch cart data from the session
-#         cart = request.session.get('cart', {})
-        
-#         # Pass the cart data to the template
-#         return render(request, 'knittingstore/checkout.html', {'cart_items': cart})
     
 class CheckoutView(View):
     def get(self, request):

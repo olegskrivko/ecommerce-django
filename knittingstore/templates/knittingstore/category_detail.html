@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h1 class="display-6 text-center">{{ category.name }}</h1>
-<div class="album py-5 bg-body-tertiary">
+<div class="album bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       {% for product in category.product_set.all %}
