@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payment</title>
+  </head>
+  <body>
+    <h1>Complete Your Payment</h1>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+      {% csrf_token %} {{ form.render }}
+      <input type="submit" value="Pay Now" />
+    </form>
+  </body>
+</html>

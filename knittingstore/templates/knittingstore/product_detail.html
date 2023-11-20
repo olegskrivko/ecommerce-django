@@ -1,16 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h1 class="text-center">{{ product.name }}</h1>
 
-{% comment %}
-<p>{{ product.description }}</p>
-<p>Price: ${{ product.price }}</p>
-<h2>Variants</h2>
-<ul>
-  {% for variant in product.productvariant_set.all %}
-  <li>{{ variant.name }}</li>
-  {% endfor %}
-</ul>
-{% endcomment %}
 <div class="container">
   <div class="row">
     <div class="col">
@@ -33,7 +23,8 @@
           {% endfor %}
         </ul>
         <div class="card-body">
-          <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="card-link">Add to Cart</a>
+          <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="card-link">ADD TO CART</a>
+          <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="card-link">BUY IT NOW</a>
         </div>
       </div>
       {% endblock content %}

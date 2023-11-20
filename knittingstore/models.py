@@ -17,6 +17,7 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='product_images/', null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    pattern_pdf = models.FileField(upload_to='pattern_pdfs/', null=True, blank=True)
     GENDER_CHOICES = [
         ('M', 'Men'),
         ('W', 'Women'),
