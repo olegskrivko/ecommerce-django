@@ -38,30 +38,11 @@
     </style>
     <header class="py-3 border-bottom">
       <div class="container mb-3 d-flex align-items-center justify-content-center">
-        {% comment %}
-        <a href="{% url 'knittingstore:category-list' %}" class="text-decoration-none link-body-emphasis">
-          {% endcomment %}
-          <span class="display-3">Hugge Knit Design</span>
-          {% comment %}
-        </a>
-        {% endcomment %}
+        <span class="display-3">Hugge Knit Design</span>
       </div>
 
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-between">
-          {% comment %}
-          <nav class="py-2">
-            <div class="container d-flex flex-wrap">
-              <ul class="nav me-auto">
-                <li class="nav-item"><a href="{% url 'knittingstore:home' %}" class="nav-link link-body-emphasis px-2 active" aria-current="page">HOME</a></li>
-                <li class="nav-item"><a href="{% url 'knittingstore:category-list' %}" class="nav-link link-body-emphasis px-2" aria-current="page">KNITTING PATTERNS</a></li>
-                <li class="nav-item"><a href="{% url 'knittingstore:category-detail' category_slug='knitting-patterns' %}" class="nav-link link-body-emphasis px-2">KNITTING PATTERNS</a></li>
-                <li class="nav-item"><a href="{% url 'knittingstore:category-list' %}" class="nav-link link-body-emphasis px-2">ABOUT</a></li>
-                <li class="nav-item"><a href="{% url 'knittingstore:category-list' %}" class="nav-link link-body-emphasis px-2">CONTACT</a></li>
-              </ul>
-            </div>
-          </nav>
-          {% endcomment %}
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" s role="search">
             <input type="search" class="form-control rounded-5 border-1" placeholder="Search..." aria-label="Search" />
           </form>
@@ -75,17 +56,8 @@
                 <div class="navbar-nav">
                   <li class="nav-item"><a href="{% url 'knittingstore:home' %}" class="nav-link link-body-emphasis px-2 active" aria-current="page">HOME</a></li>
                   <li class="nav-item"><a href="{% url 'knittingstore:category-list' %}" class="nav-link link-body-emphasis px-2" aria-current="page">KNITTING PATTERNS</a></li>
-                  {% comment %}
-                  <li class="nav-item"><a href="{% url 'knittingstore:category-detail' category_slug='yarns' %}" class="nav-link link-body-emphasis px-2">YARNS</a></li>
-                  {% endcomment %}
                   <li class="nav-item"><a href="{% url 'knittingstore:about' %}" class="nav-link link-body-emphasis px-2">ABOUT</a></li>
                   <li class="nav-item"><a href="{% url 'knittingstore:contact' %}" class="nav-link link-body-emphasis px-2">CONTACT</a></li>
-                  {% comment %} <a class="nav-link" href="{% url 'knittingstore:category-list' %}">Home</a>
-                  <a class="nav-link" href="{% url 'knittingstore:category-detail' category_slug='yarns' %}">Yarns</a>
-                  <a class="nav-link" href="{% url 'knittingstore:category-detail' category_slug='straight-needles' %}">Straight Needles</a>
-                  <a class="nav-link" href="{% url 'knittingstore:category-detail' category_slug='stitch-markers' %}">Stitch Markers</a>
-                  <a class="nav-link" href="{% url 'knittingstore:category-detail' category_slug='knitting-patterns' %}">Knitting Patterns</a>
-                  <a class="nav-link" href="{% url 'knittingstore:category-detail' category_slug='knitting-kit' %}">Knitting Kits</a> {% endcomment %}
                 </div>
               </div>
             </div>
@@ -102,7 +74,6 @@
     {% block content %} {% endblock content %}
 
     <footer class="border-top">
-      {% comment %} {% block footer %} {% include 'knittingstore:footer_category_list.html' %} {% endblock %} {% endcomment %}
       <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5">
           <div class="col mb-3">

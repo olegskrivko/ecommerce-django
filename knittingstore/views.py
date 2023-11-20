@@ -33,9 +33,6 @@ class CategoryListView(ListView):
     template_name = 'knittingstore/category_list.html'
     context_object_name = 'categories'
 
-
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 class ProductListView(ListView):
     model = Product
     template_name = 'knittingstore/product_list.html'
@@ -80,117 +77,6 @@ class ProductListView(ListView):
 
         context['products'] = products
         return context
-
-
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = 'knittingstore/product_list.html'
-#     context_object_name = 'products'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category_slug = self.kwargs['category_slug']
-#         context['category_slug'] = category_slug
-
-#         # Retrieve filter values from the GET request
-#         age_group = self.request.GET.get('age_group')
-#         difficulty = self.request.GET.get('difficulty')
-#         product_type = self.request.GET.get('product_type')
-#         sort_by_price = self.request.GET.get('sort_by_price')  # Added sorting parameter
-
-#         # Apply filters based on parameters
-#         filtered_products = Product.objects.filter(category__slug=category_slug)
-#         if age_group:
-#             filtered_products = filtered_products.filter(age_group=age_group)
-#         if difficulty:
-#             filtered_products = filtered_products.filter(difficulty_level=difficulty)
-#         if product_type:
-#             filtered_products = filtered_products.filter(product_type=product_type)
-
-#         # Apply sorting by price if requested
-#         if sort_by_price == 'asc':
-#             filtered_products = filtered_products.order_by('price')
-#         elif sort_by_price == 'desc':
-#             filtered_products = filtered_products.order_by('-price')
-
-#         context['products'] = filtered_products
-#         return context
-
-#     def get_queryset(self):
-#         # This method is not used when filtering in get_context_data
-#         return Product.objects.none()  # Return an empty queryset since filtering is done in get_context_data
-
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = 'knittingstore/product_list.html'
-#     context_object_name = 'products'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category_slug = self.kwargs['category_slug']
-#         context['category_slug'] = category_slug
-
-#         # Retrieve filter values from the GET request
-#         age_group = self.request.GET.get('age_group')
-#         difficulty = self.request.GET.get('difficulty')
-#         product_type = self.request.GET.get('product_type')
-
-#         # Retrieve the sort parameter from the GET request
-#         sort_by_price = self.request.GET.get('sort_by_price')
-
-#         # Filter products based on category_slug
-#         filtered_products = Product.objects.filter(category__slug=category_slug)
-
-#         # Apply additional filters if values are provided in the request
-#         if age_group:
-#             filtered_products = filtered_products.filter(age_group=age_group)
-#         if difficulty:
-#             filtered_products = filtered_products.filter(difficulty_level=difficulty)
-#         if product_type:
-#             filtered_products = filtered_products.filter(product_type=product_type)
-
-#         # Apply sorting if requested
-#         if sort_by_price == 'asc':
-#             filtered_products = filtered_products.order_by('price')
-#         elif sort_by_price == 'desc':
-#             filtered_products = filtered_products.order_by('-price')
-
-#         context['products'] = filtered_products
-#         return context
-
-
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = 'knittingstore/product_list.html'
-#     context_object_name = 'products'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category_slug = self.kwargs['category_slug']
-#         context['category_slug'] = category_slug
-
-#         # Retrieve filter values from the GET request
-#         age_group = self.request.GET.get('age_group')
-#         difficulty = self.request.GET.get('difficulty')
-#         product_type = self.request.GET.get('product_type')
-
-#         # Apply filters if values are provided in the request
-#         filtered_products = Product.objects.filter(category__slug=category_slug)
-#         if age_group:
-#             filtered_products = filtered_products.filter(age_group=age_group)
-#         if difficulty:
-#             filtered_products = filtered_products.filter(difficulty_level=difficulty)
-#         if product_type:
-#             filtered_products = filtered_products.filter(product_type=product_type)
-            
-
-#         context['products'] = filtered_products
-#         return context
-
-#     def get_queryset(self):
-#         # This method is not used when filtering in get_context_data
-#         return Product.objects.none()  # Return an empty queryset since filtering is done in get_context_data
-
 
 class ProductDetailView(DetailView):
     model = Product
