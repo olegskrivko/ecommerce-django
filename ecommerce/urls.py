@@ -19,11 +19,28 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
+from django.contrib.auth.views import LoginView
+from knittingstore.views import RegisterView, logout, TermsAndConditionsView, PrivacyPolicyView
+# from django.contrib.auth.views import LogoutView
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/knitting/')),  # Redirect from "/" to "/knitting/"
     path('knitting/', include("knittingstore.urls")),
+     # auth
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('register/', RegisterView.as_view(), name='register'),  # URL for registration
+    # path('logout/', LogoutView.as_view(), name='logout'),
+    # path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('logout/', logout, name='logout'),
+    path('support/terms-and-conditions/', TermsAndConditionsView.as_view(), name='terms-and-conditions'),
+    path('support/privacy-policy/', PrivacyPolicyView.as_view(), name='privacy-policy'),
+
+    # path('logout-confirmation/', LogoutConfirmationView.as_view(), name='logout_confirmation'),
+    # Include Django authentication URLs
+    # path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

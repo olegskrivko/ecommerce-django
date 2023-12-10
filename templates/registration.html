@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col w-100 m-auto" style="max-width: 500px">
+      <form method="post">
+        {% csrf_token %}
+        <h1 class="display-6 text-center py-3">Create an Account</h1>
+
+        <!-- Display form errors -->
+        {% comment %} {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          Please correct the following errors:
+          <ul>
+            {% for field in form %} {% for error in field.errors %}
+            <li>{{ error }}</li>
+            {% endfor %} {% endfor %}
+          </ul>
+        </div>
+        {% endif %} {% endcomment %}
+
+        <div class="form-floating my-3">
+          <input name="username" type="text" class="form-control" id="username" placeholder="Username" />
+          <label for="username">Username</label>
+        </div>
+
+        <div class="form-floating my-3">
+          <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" />
+          <label for="email">Email address</label>
+        </div>
+
+        <div class="form-floating my-3">
+          <input name="password1" type="password" class="form-control" id="password1" placeholder="Password" />
+          <label for="password1">Password</label>
+        </div>
+
+        <div class="form-floating my-3">
+          <input name="password2" type="password" class="form-control" id="password2" placeholder="Confirm Password" />
+          <label for="password2">Confirm Password</label>
+        </div>
+        <p class="text-secondary my-3">By creating an account, you agree to our <a href="{% url 'terms-and-conditions' %}">Terms and Conditions</a> and <a href="{% url 'privacy-policy' %}">Privacy Policy</a>.</p>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign Up</button>
+
+        <p class="text-secondary my-3">Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% comment %} "Sign Up" "Create an Account" "Join Us" "Register Now" "New User Registration" "Get Started" "Start Your Journey" {% endcomment %} {% endblock content %}

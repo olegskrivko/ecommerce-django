@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-6 text-center py-3">Knitting Tips and Tricks</h1>
+
+      <div class="tip my-3">
+        <h3>Choosing the Right Yarn</h3>
+        <div class="tip-content d-flex justify-content-start align-items-center">
+          <div class="me-3">
+            <img src="{% static 'images/default_images/tip-1.png' %}" alt="Yarn Selection" width="50" height="50" />
+          </div>
+          <p>Consider yarn weight, fiber content, and color for the perfect knitting project.</p>
+        </div>
+      </div>
+
+      <div class="tip my-3">
+        <h3>Casting On Techniques</h3>
+        <div class="tip-content d-flex justify-content-start align-items-center">
+          <div class="me-3">
+            <img src="{% static 'images/default_images/tip-2.png' %}" alt="Casting On" width="50" height="50" />
+          </div>
+          <p>Learn different casting on methods for neat and durable edges.</p>
+        </div>
+      </div>
+
+      <div class="tip my-3">
+        <h3>Reading Knitting Patterns</h3>
+        <div class="tip-content d-flex justify-content-start align-items-center">
+          <div class="me-3">
+            <img src="{% static 'images/default_images/tip-3.png' %}" alt="Knitting Pattern" width="50" height="50" />
+          </div>
+          <p>Understand abbreviations and symbols commonly used in knitting patterns.</p>
+        </div>
+      </div>
+
+      <!-- You can continue adding more tips here -->
+    </div>
+  </div>
+</div>
+{% endblock content %}

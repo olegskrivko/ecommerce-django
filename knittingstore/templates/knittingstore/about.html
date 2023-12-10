@@ -1,10 +1,47 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<div class="container">
+<div class="container mb-3">
   <div class="row">
     <div class="col">
-      <h1 class="display-6 text-center">ABOUT</h1>
+      <h1 class="display-6 py-3 text-center">ABOUT</h1>
+      <div class="col">
+        <p class="lead" style="text-align: justify">Welcome to our knitting store! We offer a wide range of high-quality knitting patterns suitable for all skill levels, from beginners to experienced knitters. Our mission is to provide a diverse collection of patterns that inspire creativity and cater to various knitting interests.</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="image">
+            <img src="{% static 'images/default_images/about-img-2.jpg' %}" alt="About Us Image" class="img-fluid" />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <p class="lead" style="text-align: justify">We aim to create a community where knitting enthusiasts can find unique and trendy patterns to express their individual style. Whether you're knitting for relaxation, gifting, or fashion, we have something for everyone.</p>
+          <p class="lead" style="text-align: justify">At our store, we value quality, creativity, and customer satisfaction. Feel free to explore our collection and embark on your knitting journey with us!</p>
+          {% comment %}
+          <div class="d-flex justify-content-center">
+            <div class="mx-3">
+              <a class="text-decoration-none text-secondary" href="https://www.instagram.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-instagram"></i> huggeknitdesign </a>
+            </div>
+            <div class="mx-3">
+              <a class="text-decoration-none text-secondary" href="https://www.facebook.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-facebook"></i> huggeknitdesign </a>
+            </div>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h5 class="text-center mb-4">Stay Connected</h5>
+          <p class="lead text-center">Join us on our knitting journey! Follow us on social media for the latest news, inspiration, and pattern releases.</p>
+          <div class="d-flex justify-content-center">
+            <div class="mx-3">
+              <a class="text-decoration-none text-secondary" href="https://www.instagram.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-instagram"></i> Instagram </a>
+            </div>
+            <div class="mx-3">
+              <a class="text-decoration-none text-secondary" href="https://www.facebook.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-facebook"></i> Facebook </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 {% endblock content %}

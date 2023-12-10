@@ -2,6 +2,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap icons CSS stylesheet link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
@@ -11,6 +14,7 @@
     <title>Document</title>
   </head>
   <body>
+    {% load static %}
     <style>
       /* Example of applying the font to a class */
       .custom-font {
@@ -63,9 +67,19 @@
             </div>
           </nav>
 
-          <div>
-            <a class="mx-2" href="{% url 'knittingstore:cart' %}">EUR</a>
-            <a class="mx-2 text-decoration-none text-secondary" href="{% url 'knittingstore:cart' %}">CART ({{ cart_items_count }})</a>
+          <div class="d-flex align-items-center">
+            <a href="{% url 'knittingstore:cart' %}" class="text-decoration-none text-secondary d-flex align-items-center me-2"> <i class="bi bi-handbag me-1"></i>({{ cart_items_count }}) </a>
+
+            <span>
+              {% if user.is_authenticated %}
+              <!-- Show a logout link if the user is logged in -->
+              <a class="mx-2 text-decoration-none text-secondary" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+              <!-- Show login and register links if the user is not logged in -->
+              <a class="mx-2 text-decoration-none text-secondary" href="{% url 'login' %}">Login</a>
+              <!-- <a class="mx-2" href="{% url 'register' %}">Register</a> -->
+              {% endif %}
+            </span>
           </div>
         </div>
       </div>
@@ -73,47 +87,77 @@
 
     {% block content %} {% endblock content %}
 
-    <footer class="border-top">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5">
-          <div class="col mb-3">
-            <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-              <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-            <p class="text-body-secondary">&copy; 2023 Hugge Knit Design. All Rights Reserved.</p>
+    <footer>
+      <div class="border-top">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5">
+            <div class="col mb-3 d-flex flex-column align-items-start">
+              <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
+                <img src="{% static 'images/default_images/knitting.png' %}" alt="Logo" class="img-fluid" width="60" height="60" />
+              </a>
+
+              <p class="text-body-secondary text-center">Hugge Knit Design</p>
+            </div>
+
+            <div class="col mb-3">
+              <h5>INFORMATION</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:about' %}" class="nav-link p-0 text-body-secondary">Our Story</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:home' %}" class="nav-link p-0 text-body-secondary">Seasonal Selections</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:tips-and-tricks' %}" class="nav-link p-0 text-body-secondary">Tips and Tricks</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:news' %}" class="nav-link p-0 text-body-secondary">News</a></li>
+              </ul>
+            </div>
+
+            <div class="col mb-3">
+              <h5>SHOP</h5>
+              <ul class="nav flex-column">
+                {% for category in categories %}
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:product-list' category_slug=category.slug %}" class="nav-link p-0 text-body-secondary">{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="col mb-3">
+              <h5>CUSTOMER SUPPORT</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="{% url 'terms-and-conditions' %}" class="nav-link p-0 text-body-secondary">Terms and conditions</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'privacy-policy' %}" class="nav-link p-0 text-body-secondary">Privacy Policy</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:faq' %}" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:contact' %}" class="nav-link p-0 text-body-secondary">Contact Us</a></li>
+              </ul>
+              {% comment %}
+              <h5>INFORMATION</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:about' %}" class="nav-link p-0 text-body-secondary">About Hugge Knit Design</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'terms-and-conditions' %}" class="nav-link p-0 text-body-secondary">Terms and conditions</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'privacy-policy' %}" class="nav-link p-0 text-body-secondary">Privacy Policy</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:faq' %}" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'knittingstore:contact' %}" class="nav-link p-0 text-body-secondary">Contact</a></li>
+              </ul>
+              {% endcomment %}
+            </div>
           </div>
-
-          <div class="col mb-3"></div>
-
-          <div class="col mb-3">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-            </ul>
-          </div>
-
-          <div class="col mb-3">
-            <h5>SHOP</h5>
-            <ul class="nav flex-column">
-              {% for category in categories %}
-              <li class="nav-item mb-2"><a href="{% url 'knittingstore:product-list' category_slug=category.slug %}" class="nav-link p-0 text-body-secondary">{{ category.name }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          <div class="col mb-3">
-            <h5>INFORMATION</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About Hugge Knit Design</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Terms and conditions</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Privacy Policy</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
-              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Contact</a></li>
-            </ul>
+        </div>
+      </div>
+      <div class="border-top">
+        <div class="container">
+          <div class="row my-3">
+            <div class="col-lg-6 col-md-12">
+              <div class="d-flex justify-content-center justify-content-md-center align-items-center">
+                <p class="text-body-secondary">&copy; 2023 Hugge Knit Design. All Rights Reserved.</p>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+              <div class="d-flex justify-content-center justify-content-md-center align-items-center">
+                <div class="mx-3">
+                  <a class="text-decoration-none text-secondary" href="https://www.instagram.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-instagram"></i> huggeknitdesign </a>
+                </div>
+                <div class="mx-3">
+                  <a class="text-decoration-none text-secondary" href="https://www.facebook.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-facebook"></i> huggeknitdesign </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

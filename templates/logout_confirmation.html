@@ -1,0 +1,12 @@
+<!-- logout.html -->
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>You've been logged out</h1>
+      <p>Thank you for using our service. You have been successfully logged out.</p>
+      <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

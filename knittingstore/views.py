@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView 
@@ -8,7 +8,9 @@ from django.contrib.sessions.models import Session
 from decimal import Decimal
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth import logout as django_logout
 import json
 # for payments
 from django.conf import settings
@@ -203,3 +205,52 @@ class PaymentView(View):
 #         # Handle canceled payment callback from the payment gateway
 #         # Update order status or take necessary action
 #         return render(request, 'payment_cancel.html')
+
+
+class RegisterView(View):
+    def get(self, request):
+        form = UserCreationForm()
+        print("Inside GET method of RegisterView")  # Add this line for debugging
+        return render(request, 'registration.html', {'form': form})
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("User registered successfully!")  # Add this line for debugging
+            return redirect('login')
+        print("User registration failed!")  # Add this line for debugging
+        return render(request, 'registration.html', {'form': form})
+    
+# class LogoutConfirmationView(TemplateView):
+#     template_name = 'logout_confirmation.html'  # Replace with your template name
+    
+
+# class CustomLogoutView(LogoutView):
+#     def get_next_page(self):
+#         return '/knitting/'  # Replace with your desired URL
+
+def logout(request):
+    django_logout(request)
+    return redirect('knittingstore:home')  # Redirect to the desired URL after logout
+
+class TermsAndConditionsView(TemplateView):
+    template_name = "knittingstore/terms_and_conditions.html"
+    
+class PrivacyPolicyView(TemplateView):
+    template_name = "knittingstore/privacy_policy.html"
+    
+class FrequentlyAskedQuestionsView(TemplateView):
+    template_name = "knittingstore/frequently_asked_questions.html"
+    
+class TipsAndTricksView(TemplateView):
+    template_name = "knittingstore/tips_and_tricks.html"
+    
+class NewsView(TemplateView):
+    template_name = "knittingstore/news.html"
+    
+    
+
+    
+    
+    

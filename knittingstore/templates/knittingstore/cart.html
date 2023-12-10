@@ -1,37 +1,45 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-<div class="container" style="background-color: #f3f3f2">
-  <h1 class="text-center custom-font">Cart</h1>
-  {% if cart_items %}
-  <table>
-    <thead>
-      <tr class="p-2">
-        <th class="p-2">Product</th>
-        <th class="p-2">Price</th>
-        <th class="p-2">Quantity</th>
-        {% comment %}
-        <th class="p-2">Subtotal</th>
-        {% endcomment %}
-        <th class="p-2">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart_items %}
-      <tr>
-        <td class="p-2">{{ item.name }}</td>
-        <td class="p-2">${{ item.price }}</td>
-
-        <td class="p-2">1</td>
-
-        <td class="p-2">
-          <a href="{% url 'knittingstore:remove-from-cart' item.id %}">Remove</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a class="p-2" href="{% url 'knittingstore:checkout' %}">Proceed to Checkout</a>
-  {% else %}
-  <p>Your cart is empty.</p>
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-6 py-4 text-center">Your Cart</h1>
+      {% if cart_items %}
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-secondary">
+            <tr>
+              <th style="background-color: #797979" scope="col" class="text-center text-white lead">Product</th>
+              <th style="background-color: #797979" scope="col" class="text-center text-white lead">Price</th>
+              <th style="background-color: #797979" scope="col" class="text-center text-white lead">Quantity</th>
+              <th style="background-color: #797979" scope="col" class="text-center text-white lead">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr>
+              <td class="text-center">{{ item.name }}</td>
+              <td class="text-center">${{ item.price }}</td>
+              <td class="text-center">1</td>
+              <td class="text-center">
+                <a class="text-decoration-none text-secondary" href="{% url 'knittingstore:remove-from-cart' item.id %}">Remove</a>
+                {% comment %} <a href="{% url 'knittingstore:remove-from-cart' item.id %}" class="btn btn-sm btn-danger">Remove</a> {% endcomment %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center">
+        <a href="{% url 'knittingstore:checkout' %}" class="btn btn-secondary mx-2">Proceed to Checkout</a>
+        <a href="{% url 'knittingstore:category-list' %}" class="btn btn-outline-secondary mx-2">Continue Shopping</a>
+      </div>
+      {% else %}
+      <div class="text-center">
+        <p>Your cart is empty.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
-{% endif %} {% endblock content %}
+{% endblock content %}

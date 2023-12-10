@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-6 py-3 text-center">NEWS</h1>
+      <div class="col">
+        <p class="lead" style="text-align: justify">Welcome to our knitting store! Thrilling updates—we've recently introduced four new knitting patterns to our collection. Our high-quality knitting patterns are now available in three languages, catering to diverse knitting communities around the world. Whether you're a novice or a seasoned knitter, our collection has something for everyone.</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="image">
+            <img src="{% static 'images/default_images/about-img-1.jpg' %}" alt="About Us Image" class="img-fluid" />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <p class="lead" style="text-align: justify">Exciting news! Our knitting store has witnessed remarkable growth in the market. As we continue to curate an extensive collection of patterns, our store has become the ultimate destination for knitting enthusiasts seeking trendy, top-quality patterns.</p>
+          <p class="lead" style="text-align: justify">It's time to celebrate at our knitting store! We're elated to announce substantial growth. What began as a passion project has now evolved into a haven for knitting enthusiasts worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col">
+      <h5 class="text-center mb-4">Stay Connected</h5>
+      <p class="lead text-center">Join us on our knitting journey! Follow us on social media for the latest news, inspiration, and pattern releases.</p>
+      <div class="d-flex justify-content-center">
+        <div class="mx-3">
+          <a class="text-decoration-none text-secondary" href="https://www.instagram.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-instagram"></i> Instagram </a>
+        </div>
+        <div class="mx-3">
+          <a class="text-decoration-none text-secondary" href="https://www.facebook.com/huggeknitdesign" target="_blank" rel="noopener noreferrer"> <i class="bi bi-facebook"></i> Facebook </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
