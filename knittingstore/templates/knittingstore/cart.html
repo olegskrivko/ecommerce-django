@@ -7,7 +7,7 @@
       {% if cart_items %}
       <div class="table-responsive">
         <table class="table table-bordered">
-          <thead class="table-secondary">
+          <thead>
             <tr>
               <th style="background-color: #797979" scope="col" class="text-center text-white lead">Product</th>
               <th style="background-color: #797979" scope="col" class="text-center text-white lead">Price</th>
@@ -19,7 +19,7 @@
             {% for item in cart_items %}
             <tr>
               <td class="text-center">{{ item.name }}</td>
-              <td class="text-center">${{ item.price }}</td>
+              <td class="text-center">&euro;{{ item.price }}</td>
               <td class="text-center">1</td>
               <td class="text-center">
                 <a class="text-decoration-none text-secondary" href="{% url 'knittingstore:remove-from-cart' item.id %}">Remove</a>

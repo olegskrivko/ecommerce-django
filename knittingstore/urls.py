@@ -1,6 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic.base import RedirectView
-from .views import HomeView, AboutView, CategoryListView, ProductListView, ProductDetailView,PaymentView, CheckoutView, CartView, RemoveFromCartView, AddToCartView, ContactView, FrequentlyAskedQuestionsView, TipsAndTricksView, NewsView
+from .views import HomeView, AboutView, paypal_ipn_view,  PaymentView, PaymentSuccessView, PaymentCancelView, CategoryListView, ProductListView, ProductDetailView,PaymentView, CheckoutView, CartView, RemoveFromCartView, AddToCartView, ContactView, FrequentlyAskedQuestionsView, TipsAndTricksView, NewsView
 from . import views
 
 app_name = "knittingstore"
@@ -20,7 +20,13 @@ urlpatterns = [
     path('remove-from-cart/<int:product_id>/', views.RemoveFromCartView.as_view(), name='remove-from-cart'),
     path('checkout/', views.CheckoutView.as_view(), name='checkout'),
     path('contact/', views.ContactView.as_view(), name='contact'),
+
+    
     path('payment/', PaymentView.as_view(), name='payment'),
+    path("paypal/", include('paypal.standard.ipn.urls')),
+    path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
+    path('payment-cancel/', PaymentCancelView.as_view(), name='payment-cancel'),
+    # path('paypal-ipn/', views.paypal_ipn_view, name='paypal-ipn'),
   
     # path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
     # path('payment-cancel/', PaymentCancelView.as_view(), name='payment-cancel'),

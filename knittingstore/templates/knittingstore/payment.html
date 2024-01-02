@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,6 +7,19 @@
   <body>
     <h1>Complete Your Payment</h1>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+      {% csrf_token %} {{ form.render }}
+      <input type="submit" value="Pay Now" />
+    </form>
+  </body>
+</html>
+{% endcomment %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Payment</title>
+  </head>
+  <body>
+    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
       {% csrf_token %} {{ form.render }}
       <input type="submit" value="Pay Now" />
     </form>

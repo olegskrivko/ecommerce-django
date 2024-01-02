@@ -39,6 +39,26 @@
         padding: 0.3rem 0.5rem; /* Adjust the padding to reduce height */
         /* Adjust line height for better text alignment */
       }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .content {
+        flex: 1;
+      }
+
+      .footer {
+        flex-shrink: 0;
+        width: 100%;
+      }
     </style>
     <header class="py-3 border-bottom">
       <div class="container mb-3 d-flex align-items-center justify-content-center">
@@ -47,9 +67,11 @@
 
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-between">
+          {% comment %}
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" s role="search">
             <input type="search" class="form-control rounded-5 border-1" placeholder="Search..." aria-label="Search" />
           </form>
+          {% endcomment %}
 
           <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -84,10 +106,9 @@
         </div>
       </div>
     </header>
+    <div class="content">{% block content %} {% endblock content %}</div>
 
-    {% block content %} {% endblock content %}
-
-    <footer>
+    <footer class="footer">
       <div class="border-top">
         <div class="container">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5">

@@ -16,7 +16,15 @@
             {% endfor %} {% endfor %}
           </ul>
         </div>
-        {% endif %} {% endcomment %}
+        {% endif %} {% endcomment %} {% comment %} {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %} {% endcomment %} {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %} {% endif %}
 
         <div class="form-floating my-3">
           <input name="username" type="text" class="form-control" id="username" placeholder="Username" />

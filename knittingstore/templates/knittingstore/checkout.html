@@ -8,8 +8,8 @@
       <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Your cart</span>
-            <span class="badge bg-primary rounded-pill">{{ cart_items|length }}</span>
+            <span class="">Your cart</span>
+            <span class="badge bg-secondary rounded-pill">{{ cart_items|length }}</span>
           </h4>
 
           <ul class="list-group mb-3">
@@ -19,28 +19,30 @@
                 <h6 class="my-0">{{ item_data.name }}</h6>
                 <small class="text-body-secondary">{{ item_data.description }}</small>
               </div>
-              <span class="text-body-secondary">${{ item_data.price }}</span>
+              <span class="text-body-secondary">&euro;{{ item_data.price }}</span>
             </li>
             {% endfor %}
 
             <!-- Other list items -->
 
             <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>${{ cart_total }}</strong>
+              <span>Total (EUR)</span>
+              <strong>&euro;{{ cart_total }}</strong>
             </li>
           </ul>
 
+          {% comment %}
           <form class="card p-2">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Promo code" />
               <button type="submit" class="btn btn-secondary">Redeem</button>
             </div>
           </form>
+          {% endcomment %}
         </div>
         <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">Billing address</h4>
-          <form class="needs-validation" novalidate="">
+          <h4 class="mb-3">Contact Information</h4>
+          <form action="{% url 'knittingstore:payment' %}" method="get" class="needs-validation" novalidate="">
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">First name</label>
@@ -54,6 +56,7 @@
                 <div class="invalid-feedback">Valid last name is required.</div>
               </div>
 
+              {% comment %}
               <div class="col-12">
                 <label for="username" class="form-label">Username</label>
                 <div class="input-group has-validation">
@@ -62,40 +65,96 @@
                   <div class="invalid-feedback">Your username is required.</div>
                 </div>
               </div>
+              {% endcomment %}
+              <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control" id="email" placeholder="you@example.com" />
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+              </div>
 
+              {% comment %}
               <div class="col-12">
                 <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
                 <input type="email" class="form-control" id="email" placeholder="you@example.com" />
                 <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
               </div>
-
+              {% endcomment %} {% comment %}
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" />
                 <div class="invalid-feedback">Please enter your shipping address.</div>
               </div>
-
+              {% endcomment %} {% comment %}
               <div class="col-12">
                 <label for="address2" class="form-label">Address 2 <span class="text-body-secondary">(Optional)</span></label>
                 <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" />
               </div>
+              {% endcomment %}
 
               <div class="col-md-5">
                 <label for="country" class="form-label">Country</label>
                 <select class="form-select" id="country" required="">
-                  <option value="">Choose...</option>
-                  <option>United States</option>
+                  <option value=""></option>
+                  <option value="AL">Albania</option>
+                  <option value="AD">Andorra</option>
+                  <option value="AT">Austria</option>
+                  <option value="AZ">Azerbaijan Republic</option>
+                  <option value="BY">Belarus</option>
+                  <option value="BE">Belgium</option>
+                  <option value="BA">Bosnia and Herzegovina</option>
+                  <option value="BG">Bulgaria</option>
+                  <option value="HR">Croatia</option>
+                  <option value="CY">Cyprus</option>
+                  <option value="CZ">Czech Republic</option>
+                  <option value="DK">Denmark</option>
+                  <option value="EE">Estonia</option>
+                  <option value="FO">Faroe Islands</option>
+                  <option value="FI">Finland</option>
+                  <option value="FR">France</option>
+                  <option value="GE">Georgia</option>
+                  <option value="DE">Germany</option>
+                  <option value="GR">Greece</option>
+                  <option value="HU">Hungary</option>
+                  <option value="IS">Iceland</option>
+                  <option value="IE">Ireland</option>
+                  <option value="IT">Italy</option>
+                  <option value="LV">Latvia</option>
+                  <option value="LI">Liechtenstein</option>
+                  <option value="LT">Lithuania</option>
+                  <option value="LU">Luxembourg</option>
+                  <option value="MK">North Macedonia</option>
+                  <option value="MT">Malta</option>
+                  <option value="MD">Moldova</option>
+                  <option value="MC">Monaco</option>
+                  <option value="ME">Montenegro</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="NO">Norway</option>
+                  <option value="PL">Poland</option>
+                  <option value="PT">Portugal</option>
+                  <option value="RO">Romania</option>
+                  <option value="RU">Russia</option>
+                  <option value="SM">San Marino</option>
+                  <option value="RS">Serbia</option>
+                  <option value="SK">Slovakia</option>
+                  <option value="SI">Slovenia</option>
+                  <option value="ES">Spain</option>
+                  <option value="SJ">Svalbard and Jan Mayen</option>
+                  <option value="SE">Sweden</option>
+                  <option value="CH">Switzerland</option>
+                  <option value="UA">Ukraine</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="VA">Vatican City</option>
                 </select>
                 <div class="invalid-feedback">Please select a valid country.</div>
               </div>
 
               <div class="col-md-4">
-                <label for="state" class="form-label">State</label>
-                <select class="form-select" id="state" required="">
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
-                <div class="invalid-feedback">Please provide a valid state.</div>
+                <label for="state" class="form-label">City/Region</label>
+                <input type="text" class="form-control" id="city" placeholder="" required="" />
+                <div class="invalid-feedback">Please provide a valid city/region.</div>
               </div>
 
               <div class="col-md-3">
@@ -105,18 +164,21 @@
               </div>
             </div>
 
+            {% comment %}
             <hr class="my-4" />
 
             <div class="form-check">
               <input type="checkbox" class="form-check-input" id="same-address" />
               <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
             </div>
-
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="save-info" />
-              <label class="form-check-label" for="save-info">Save this information for next time</label>
+            {% endcomment %} {% comment %}
+            <div class="col-12">
+              <div class="form-check mt-3">
+                <input type="checkbox" class="form-check-input" id="subscribe" />
+                <label class="form-check-label" for="subscribe">Subscribe to newsletters or updates</label>
+              </div>
             </div>
-
+            {% endcomment %} {% comment %}
             <hr class="my-4" />
 
             <h4 class="mb-3">Payment</h4>
@@ -162,10 +224,12 @@
                 <div class="invalid-feedback">Security code required</div>
               </div>
             </div>
-
+            {% endcomment %} {% comment %}
             <hr class="my-4" />
+            {% endcomment %} {% comment %} <button class="w-100 btn btn-secondary btn-lg mt-3" type="submit">Continue to checkout</button> {% endcomment %}
 
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+            <!-- Continue to PayPal button -->
+            <button class="w-100 btn btn-secondary btn-lg mt-3" type="submit">Continue to PayPal</button>
           </form>
         </div>
       </div>

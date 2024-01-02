@@ -8,14 +8,24 @@ from django.contrib.sessions.models import Session
 from decimal import Decimal
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import logout as django_logout
 import json
 # for payments
 from django.conf import settings
 from paypal.standard.forms import PayPalPaymentsForm
+from django.contrib import messages
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+
+from django.conf import settings
+from django.views.generic import TemplateView
+from paypal.standard.forms import PayPalPaymentsForm
+from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -86,29 +96,6 @@ class ProductDetailView(DetailView):
     slug_url_kwarg = 'product_slug'  # This should match the parameter in your URL pattern
     context_object_name = 'product'
 
-# class AddToCartView(View):
-#     def get(self, request, product_id):
-#         product = get_object_or_404(Product, pk=product_id)
-#         cart = request.session.get('cart', {})
-
-#         # Increment the quantity if the item is already in the cart
-#         if str(product.id) in cart:
-#             cart[str(product.id)]['quantity'] = cart[str(product.id)].get('quantity', 0) + 1
-#         else:
-#             # Add the item to the cart with quantity 1 if it's not already present
-#             cart[str(product.id)] = {
-#                 'id': product.id,
-#                 'name': product.name,
-#                 'price': str(product.price),
-#                 'quantity': 1,  # Set quantity to 1 for the new item
-#             }
-
-#         request.session['cart'] = cart
-#         cart_items_count = sum(item.get('quantity', 0) for item in cart.values())
-#         print("Cart Items Count:", cart_items_count)
-
-#         return HttpResponseRedirect(reverse('knittingstore:cart'))
-
 class AddToCartView(View):
     def get(self, request, product_id):
         print('product_id' + str(product_id))
@@ -129,7 +116,6 @@ class AddToCartView(View):
             # Product already in the cart; you might want to redirect or show a message
             return HttpResponseRedirect(reverse('knittingstore:cart'))  # Redirect to the cart page or an appropriate page
 
-
 class CartView(View):
     def get(self, request):
         cart = request.session.get('cart', {})
@@ -145,8 +131,7 @@ class RemoveFromCartView(View):
         
         # Redirect to the cart page after removal
         return HttpResponseRedirect(reverse('knittingstore:cart'))
-
-    
+ 
 class CheckoutView(View):
     def get(self, request):
         cart_items = request.session.get('cart', {})
@@ -165,24 +150,114 @@ class CheckoutView(View):
         return render(request, 'knittingstore/checkout.html', context)
 
 
-class PaymentView(View):
+# class PaymentView(View):
     
-    def get(self, request):
+#     def get(self, request):
         
+#         paypal_dict = {
+#             'business': settings.PAYPAL_RECEIVER_EMAIL,
+#             'amount': '100.00',  # Replace with the actual amount
+#             'currency_code': 'USD',  # Replace with the currency code
+#             'item_name': 'Product Name',  # Replace with the product name
+#             'invoice': 'unique-invoice-id',  # Replace with a unique invoice ID
+#             'notify_url': request.build_absolute_uri(reverse('paypal-ipn')),  # Replace with your IPN URL
+#             'return_url': request.build_absolute_uri(reverse('payment-success')),
+#             'cancel_return': request.build_absolute_uri(reverse('payment-cancel')),
+#         }
+#         form = PayPalPaymentsForm(initial=paypal_dict)
+#         return render(request, 'payment/payment.html', {'form': form})
+    
+
+
+
+class RegisterView(View):
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, 'registration.html', {'form': form})
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User registered successfully!')
+            return redirect('login')
+        else:
+            messages.error(request, 'User registration failed! Please check the form.')
+        return render(request, 'registration.html', {'form': form})
+    
+
+def logout(request):
+    django_logout(request)
+    return redirect('knittingstore:home')  # Redirect to the desired URL after logout
+
+class TermsAndConditionsView(TemplateView):
+    template_name = "knittingstore/terms_and_conditions.html"
+    
+class PrivacyPolicyView(TemplateView):
+    template_name = "knittingstore/privacy_policy.html"
+    
+class FrequentlyAskedQuestionsView(TemplateView):
+    template_name = "knittingstore/frequently_asked_questions.html"
+    
+class TipsAndTricksView(TemplateView):
+    template_name = "knittingstore/tips_and_tricks.html"
+    
+class NewsView(TemplateView):
+    template_name = "knittingstore/news.html"
+    
+#############################################
+class PaymentView(TemplateView):
+    template_name = 'knittingstore/payment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         paypal_dict = {
             'business': settings.PAYPAL_RECEIVER_EMAIL,
-            'amount': '100.00',  # Replace with the actual amount
-            'currency_code': 'USD',  # Replace with the currency code
-            'item_name': 'Product Name',  # Replace with the product name
+            'amount': '1.00',  # Replace with the actual amount
+            'currency_code': 'EUR',  # Replace with the currency code
+            'item_name': 'Book',  # Replace with the product name
             'invoice': 'unique-invoice-id',  # Replace with a unique invoice ID
-            'notify_url': request.build_absolute_uri(reverse('paypal-ipn')),  # Replace with your IPN URL
-            'return_url': request.build_absolute_uri(reverse('payment-success')),
-            'cancel_return': request.build_absolute_uri(reverse('payment-cancel')),
+            'notify_url': self.request.build_absolute_uri(reverse('paypal-ipn')),  # Replace with your IPN URL
+            'return_url': self.request.build_absolute_uri(reverse('payment-success')),
+            'cancel_return': self.request.build_absolute_uri(reverse('payment-cancel')),
         }
         form = PayPalPaymentsForm(initial=paypal_dict)
-        return render(request, 'payment/payment.html', {'form': form})
+        context['form'] = form
+        #return context
+        return render(self.request, 'knittingstore/checkout.html', context)
     
-# class CheckoutView(View):
+class PaymentSuccessView(TemplateView):
+    template_name = 'knittingstore/success.html'
+
+class PaymentCancelView(TemplateView):
+    template_name = 'knittingstore/cancel.html'
+    
+@csrf_exempt  # IMPORTANT: To avoid CSRF protection for the IPN, mark the view as csrf_exempt
+def paypal_ipn_view(request):
+    # PayPal sends data using POST method
+    if request.method == 'POST':
+        # Retrieve the IPN data sent by PayPal
+        ipn_data = request.POST
+        # Process and validate the IPN data
+        # For example, validate transaction ID, amount, etc.
+        
+        # Example: Update the order status based on IPN data
+        # Order.objects.filter(id=ipn_data['order_id']).update(status=ipn_data['payment_status'])
+        
+        # Perform necessary actions based on the IPN data
+        
+        # Return an HTTP response with a success status (200)
+        return HttpResponse(status=200)
+    else:
+        # If it's not a POST request, return a bad request status (400)
+        return HttpResponse(status=400)
+    
+
+# class CustomLogoutView(LogoutView):
+#     def get_next_page(self):
+#         return '/knitting/'  # Replace with your desired URL    
+    
+    # class CheckoutView(View):
 #     def get(self, request):
 #         # Collect order information
 #         # Render the checkout template with order details
@@ -205,52 +280,3 @@ class PaymentView(View):
 #         # Handle canceled payment callback from the payment gateway
 #         # Update order status or take necessary action
 #         return render(request, 'payment_cancel.html')
-
-
-class RegisterView(View):
-    def get(self, request):
-        form = UserCreationForm()
-        print("Inside GET method of RegisterView")  # Add this line for debugging
-        return render(request, 'registration.html', {'form': form})
-
-    def post(self, request):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            print("User registered successfully!")  # Add this line for debugging
-            return redirect('login')
-        print("User registration failed!")  # Add this line for debugging
-        return render(request, 'registration.html', {'form': form})
-    
-# class LogoutConfirmationView(TemplateView):
-#     template_name = 'logout_confirmation.html'  # Replace with your template name
-    
-
-# class CustomLogoutView(LogoutView):
-#     def get_next_page(self):
-#         return '/knitting/'  # Replace with your desired URL
-
-def logout(request):
-    django_logout(request)
-    return redirect('knittingstore:home')  # Redirect to the desired URL after logout
-
-class TermsAndConditionsView(TemplateView):
-    template_name = "knittingstore/terms_and_conditions.html"
-    
-class PrivacyPolicyView(TemplateView):
-    template_name = "knittingstore/privacy_policy.html"
-    
-class FrequentlyAskedQuestionsView(TemplateView):
-    template_name = "knittingstore/frequently_asked_questions.html"
-    
-class TipsAndTricksView(TemplateView):
-    template_name = "knittingstore/tips_and_tricks.html"
-    
-class NewsView(TemplateView):
-    template_name = "knittingstore/news.html"
-    
-    
-
-    
-    
-    
