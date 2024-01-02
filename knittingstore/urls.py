@@ -21,16 +21,7 @@ urlpatterns = [
     path('checkout/', views.CheckoutView.as_view(), name='checkout'),
     path('contact/', views.ContactView.as_view(), name='contact'),
 
-    
-    # path('payment/', PaymentView.as_view(), name='payment'),
-    # path("paypal/", include('paypal.standard.ipn.urls')),
-    # path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
-    # path('payment-cancel/', PaymentCancelView.as_view(), name='payment-cancel'),
-    # path('paypal-ipn/', views.paypal_ipn_view, name='paypal-ipn'),
-  
-    # path('payment-success/', PaymentSuccessView.as_view(), name='payment-success'),
-    # path('payment-cancel/', PaymentCancelView.as_view(), name='payment-cancel'),
-    
+ 
    
 
 ] 

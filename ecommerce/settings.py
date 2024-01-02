@@ -47,7 +47,7 @@ DEBUG = True
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
 
-# PAYPAL_TEST = True
+
 
 # Application definition
 
@@ -59,8 +59,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'knittingstore.apps.KnittingstoreConfig',
-    # 'paypal.standard.ipn',
-     #'paypal.standard',
 ]
 
 MIDDLEWARE = [
@@ -189,11 +187,3 @@ LOGIN_REDIRECT_URL = '/'
 
 # URL to redirect to after a successful logout
 LOGOUT_REDIRECT_URL = '/'
-
-# For PAYPAL payments
-# PAYPAL_RECEIVER_EMAIL = 'olegs.krivko@gmail.com'
-# PAYPAL_TEST = True  # Set to False for live transactions
-# ###
-# PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID') 
-# PAYPAL_SECRET_KEY = os.getenv('PAYPAL_SECRET_KEY') 
-# PAYPAL_RECEIVER_EMAIL = 'olegs.krivko@gmail.com'
