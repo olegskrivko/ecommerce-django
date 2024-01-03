@@ -1,15 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+# from cloudinary.models import CloudinaryField
+import cloudinary.uploader
 # Create your models here.
     
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
+    # image = models.ImageField(upload_to='category_images/', null=True, blank=True)
     image = models.ImageField(upload_to='category_images/', null=True, blank=True)
+
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if self.image:
+            # Upload image to Cloudinary
+            uploaded_image = cloudinary.uploader.upload(self.image)
+            self.image = uploaded_image['url']
+        
+        super().save(*args, **kwargs)
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -196,3 +196,28 @@ LOGIN_REDIRECT_URL = '/'
 # URL to redirect to after a successful logout
 LOGOUT_REDIRECT_URL = '/'
 
+# settings.py
+
+# Add Cloudinary settings
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name='dymne7cde',
+    api_key='973684546521283',
+    api_secret='EUe6vH2blGMQfXf7q_-Q4mULoXA'
+)
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'dymne7cde',
+#     'API_KEY': 'your_api_key',
+#     'API_SECRET': 'EUe6vH2blGMQfXf7q_-Q4mULoXA',
+# }
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# cloudinary://973684546521283:EUe6vH2blGMQfXf7q_-Q4mULoXA@dymne7cde
+# CLOUDINARY_URL=cloudinary://973684546521283:EUe6vH2blGMQfXf7q_-Q4mULoXA@dymne7cde
