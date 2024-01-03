@@ -59,9 +59,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'knittingstore.apps.KnittingstoreConfig',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -154,11 +156,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # This should point to the directory where your static files are located
-]
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',  # This should point to the directory where your static files are located
+# ]
+STATIC_URL = 'static/'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
+MEDIA_URLS ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 #     # Other static directories if any
@@ -188,6 +196,3 @@ LOGIN_REDIRECT_URL = '/'
 # URL to redirect to after a successful logout
 LOGOUT_REDIRECT_URL = '/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-MEDIA_URLS ='/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

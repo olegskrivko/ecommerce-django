@@ -41,11 +41,13 @@ urlpatterns = [
     # path('logout-confirmation/', LogoutConfirmationView.as_view(), name='logout_confirmation'),
     # Include Django authentication URLs
     # path('accounts/', include('django.contrib.auth.urls')),
-]
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
