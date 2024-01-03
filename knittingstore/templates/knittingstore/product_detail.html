@@ -1,13 +1,51 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title text-center mb-4">{{ product.name }}</h1>
+
+          <div class="row">
+            <div class="col-md-6">
+              {% if product.image %}
+              <img src="{{ product.image }}" alt="{{ product.name }}" class="img-fluid rounded" />
+              {% else %}
+              <img src="{% static 'images/default_images/default_product_image.jpg' %}" alt="{{ product.name }}" class="img-fluid rounded" />
+              {% endif %}
+            </div>
+            <div class="col-md-6">
+              <p class="lead">{{ product.description }}</p>
+              <p class="text-muted">Price: &euro;{{ product.price }}</p>
+
+              <h2 class="mt-4">Options</h2>
+              <ul class="list-group list-group-flush">
+                {% for variant in product.productvariant_set.all %}
+                <li class="list-group-item">{{ variant.name }}</li>
+                {% endfor %}
+              </ul>
+
+              <div class="mt-4">
+                <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="btn btn-outline-dark">ADD TO CART</a>
+                <a href="{% url 'knittingstore:add-to-cart' product_id=product.id %}" class="btn btn-dark ms-2">BUY IT NOW</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% comment %} {% extends 'base.html' %} {% load static %} {% block content %}
 <h1 class="text-center">{{ product.name }}</h1>
 
 <div class="container">
   <div class="row">
     <div class="col">
       <div class="card" style="width: 18rem">
-        {% if product.image %} {% comment %} <img src="{{ product.image.url }}" alt="{{ product.name }}" /> {% endcomment %}
+        {% if product.image %} {% endcomment %} {% comment %} <img src="{{ product.image.url }}" alt="{{ product.name }}" /> {% endcomment %}
         <!-- Assuming 'product' is the object passed to the template -->
-        <img src="{{ product.image }}" alt="{{ product.name }}" />
+        {% comment %} <img src="{{ product.image }}" alt="{{ product.name }}" />
         {% else %}
 
         <img src="{% static 'images/default_images/default_product_image.jpg' %}" alt="{{ product.name }}" />
@@ -32,3 +70,4 @@
     </div>
   </div>
 </div>
+{% endcomment %}

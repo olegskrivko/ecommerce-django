@@ -2,11 +2,80 @@
 <div class="album bg-body-tertiary">
   <div class="container py-3">
     <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form method="GET" action="{% url 'knittingstore:product-list' category_slug=category_slug %}">
+              <div class="row">
+                <div class="col-4 mb-3">
+                  <label for="age_group">AGE GROUP:</label>
+                  <select name="age_group" id="age_group" class="form-select">
+                    <option value="">All</option>
+                    <option value="T">Toddler</option>
+                    <option value="C">Children</option>
+                    <option value="A">Adult</option>
+                  </select>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="difficulty" class="me-2">DIFFICULTY:</label>
+                  <select name="difficulty" id="difficulty" class="form-select">
+                    <option value="">All</option>
+                    <option value="B">Beginner</option>
+                    <option value="I">Intermediate</option>
+                    <option value="E">Expert</option>
+                  </select>
+                </div>
+                <div class="col-4 mb-3">
+                  <label for="product_type" class="me-2">TYPE:</label>
+                  <select name="product_type" id="product_type" class="form-select">
+                    <option value="">All</option>
+                    <option value="H">Hat</option>
+                    <option value="S">Scarf</option>
+                    <option value="C">Coat</option>
+                    <option value="SW">Sweater</option>
+                    <option value="O">Other</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <input class="btn btn-outline-secondary" type="submit" value="Filter" />
+                </div>
+              </div>
+              {% comment %}
+              <div class="row">
+                <div class="col">
+                  <input class="btn btn-outline-secondary" type="submit" value="Filter" />
+                </div>
+              </div>
+              {% endcomment %}
+            </form>
+          </div>
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form method="GET" action="{% url 'knittingstore:product-list' category_slug=category_slug %}" class="w-100">
+              <input type="hidden" name="age_group" value="{{ request.GET.age_group }}" />
+              <input type="hidden" name="difficulty" value="{{ request.GET.difficulty }}" />
+              <input type="hidden" name="product_type" value="{{ request.GET.product_type }}" />
+
+              <div class="d-flex align-items-end">
+                <div class="me-2">
+                  <label for="sort_by_price" class="me-2 mb-0">SORT BY:</label>
+                  <select name="sort_by_price" id="sort_by_price" class="form-select me-2">
+                    <option value="asc">Price, Low to High</option>
+                    <option value="desc">Price, High to Low</option>
+                  </select>
+                </div>
+
+                <div>
+                  <button type="submit" class="btn btn-outline-secondary">Apply</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% comment %}
       <div class="col-6">
         <form method="GET" action="{% url 'knittingstore:product-list' category_slug=category_slug %}">
-          {% comment %}
-          <p>FILTER BY</p>
-          {% endcomment %}
           <div class="d-flex align-items-end">
             <div class="me-2">
               <label for="age_group">AGE GROUP:</label>
@@ -43,7 +112,9 @@
           </div>
         </form>
       </div>
+      {% endcomment %}
       <!-- Sorting buttons -->
+      {% comment %}
       <div class="col-md-6 d-flex align-items-center">
         <form method="GET" action="{% url 'knittingstore:product-list' category_slug=category_slug %}" class="w-100">
           <input type="hidden" name="age_group" value="{{ request.GET.age_group }}" />
@@ -64,6 +135,7 @@
           </div>
         </form>
       </div>
+      {% endcomment %}
     </div>
   </div>
 

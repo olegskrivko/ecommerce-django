@@ -45,25 +45,25 @@ class CategoryListView(ListView):
     template_name = 'knittingstore/category_list.html'
     context_object_name = 'categories'
 
+
 class ProductListView(ListView):
     model = Product
     template_name = 'knittingstore/product_list.html'
     context_object_name = 'products'
-    paginate_by = 10  # Number of items per page
+    paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_queryset(self):
         category_slug = self.kwargs['category_slug']
-        context['category_slug'] = category_slug
-
+        category = get_object_or_404(Category, slug=category_slug)
+        
         # Retrieve filter values from the GET request
         age_group = self.request.GET.get('age_group')
         difficulty = self.request.GET.get('difficulty')
         product_type = self.request.GET.get('product_type')
-        sort_by_price = self.request.GET.get('sort_by_price')  # Added sorting parameter
+        sort_by_price = self.request.GET.get('sort_by_price')
 
         # Apply filters based on parameters
-        filtered_products = Product.objects.filter(category__slug=category_slug)
+        filtered_products = Product.objects.filter(category=category).order_by('price')
         if age_group:
             filtered_products = filtered_products.filter(age_group=age_group)
         if difficulty:
@@ -77,18 +77,58 @@ class ProductListView(ListView):
         elif sort_by_price == 'desc':
             filtered_products = filtered_products.order_by('-price')
 
-        # Pagination
-        paginator = Paginator(filtered_products, self.paginate_by)
-        page_number = self.request.GET.get('page')
-        try:
-            products = paginator.page(page_number)
-        except PageNotAnInteger:
-            products = paginator.page(1)
-        except EmptyPage:
-            products = paginator.page(paginator.num_pages)
+        return filtered_products
 
-        context['products'] = products
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_slug = self.kwargs['category_slug']
+        context['category_slug'] = category_slug
         return context
+
+# class ProductListView(ListView):
+#     model = Product
+#     template_name = 'knittingstore/product_list.html'
+#     context_object_name = 'products'
+#     paginate_by = 10  # Number of items per page
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         category_slug = self.kwargs['category_slug']
+#         context['category_slug'] = category_slug
+
+#         # Retrieve filter values from the GET request
+#         age_group = self.request.GET.get('age_group')
+#         difficulty = self.request.GET.get('difficulty')
+#         product_type = self.request.GET.get('product_type')
+#         sort_by_price = self.request.GET.get('sort_by_price')  # Added sorting parameter
+
+#         # Apply filters based on parameters
+#         filtered_products = Product.objects.filter(category__slug=category_slug)
+#         if age_group:
+#             filtered_products = filtered_products.filter(age_group=age_group)
+#         if difficulty:
+#             filtered_products = filtered_products.filter(difficulty_level=difficulty)
+#         if product_type:
+#             filtered_products = filtered_products.filter(product_type=product_type)
+
+#         # Apply sorting by price if requested
+#         if sort_by_price == 'asc':
+#             filtered_products = filtered_products.order_by('price')
+#         elif sort_by_price == 'desc':
+#             filtered_products = filtered_products.order_by('-price')
+
+#         # Pagination
+#         paginator = Paginator(filtered_products, self.paginate_by)
+#         page_number = self.request.GET.get('page')
+#         try:
+#             products = paginator.page(page_number)
+#         except PageNotAnInteger:
+#             products = paginator.page(1)
+#         except EmptyPage:
+#             products = paginator.page(paginator.num_pages)
+
+#         context['products'] = products
+#         return context
 
 class ProductDetailView(DetailView):
     model = Product

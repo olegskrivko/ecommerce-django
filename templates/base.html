@@ -133,9 +133,13 @@
             <div class="col mb-3">
               <h5>SHOP</h5>
               <ul class="nav flex-column">
-                {% comment %} {% for category in categories %}
-                <li class="nav-item mb-2"><a href="{% url 'knittingstore:product-list' category_slug=category.slug %}" class="nav-link p-0 text-body-secondary">{{ category.name }}</a></li>
-                {% endfor %} {% endcomment %}
+                {% if categories %} {% for category in categories %}
+                <li class="nav-item mb-2">
+                  <a href="{% url 'knittingstore:product-list' category_slug=category.slug %}" class="nav-link p-0 text-body-secondary">{{ category.name }}</a>
+                </li>
+                {% endfor %} {% else %}
+                <li>No categories available</li>
+                {% endif %}
               </ul>
             </div>
 
