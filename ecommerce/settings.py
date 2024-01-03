@@ -27,7 +27,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Define the base directory for media files
-MEDIA_ROOT = BASE_DIR / 'ecommerce/media'
+# MEDIA_ROOT = BASE_DIR / 'ecommerce/media'
 
 # Define the URL prefix for media files
 MEDIA_URL = '/media/'
@@ -45,8 +45,8 @@ SECRET_KEY = 'django-insecure-bhxxb6589q9z)+!6w&@7w#a_%70$gy!i1tchj2946r8!oedyli
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
-
+# ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -187,3 +187,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # URL to redirect to after a successful logout
 LOGOUT_REDIRECT_URL = '/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+MEDIA_URLS ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
