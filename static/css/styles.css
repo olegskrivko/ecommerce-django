@@ -1,0 +1,10 @@
+/* @font-face {
+  font-family: "YourFontName";
+  src: url("{% static "fonts/AvenirNextLTPro-It.otf" %}") format("truetype");
+
+} */
+
+/* Use the font */
+/* body {
+  font-family: "AvenirNextLTPro-It", sans-serif;
+} */
