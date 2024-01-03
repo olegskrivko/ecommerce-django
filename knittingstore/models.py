@@ -67,6 +67,14 @@ class ProductVariant(models.Model):
     def __str__(self):
         return f"{self.product.name} - {self.name}"
     
+    def save(self, *args, **kwargs):
+        if self.image:  # Check if an image is provided
+            # Upload the image to Cloudinary
+            uploaded_image = cloudinary.uploader.upload(self.image)
+            self.image = uploaded_image['url']  # Store the Cloudinary URL
+        
+        super().save(*args, **kwargs)
+    
     
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
