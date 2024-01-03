@@ -7,20 +7,16 @@ import cloudinary.uploader
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    # image = models.ImageField(upload_to='category_images/', null=True, blank=True)
-    image = models.CharField(max_length=200, null=True, blank=True)  # Store Cloudinary URL
+    image = models.ImageField(upload_to='category_images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
     
     def save(self, *args, **kwargs):
-        if self.image:  # Assuming you're providing an image URL for Category.image
-            # No need to upload to Cloudinary as the URL is already present
-            pass
-        else:
-            # Upload image to Cloudinary
+        if self.image:  # Check if an image is provided
+            # Upload the image to Cloudinary
             uploaded_image = cloudinary.uploader.upload(self.image)
-            self.image = uploaded_image['url']
+            self.image = uploaded_image['url']  # Store the Cloudinary URL
         
         super().save(*args, **kwargs)
 
