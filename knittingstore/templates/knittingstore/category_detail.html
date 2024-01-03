@@ -6,8 +6,9 @@
       {% for product in category.product_set.all %}
       <div class="col">
         <div class="card shadow-sm">
-          {% if product.image %}
-          <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+          {% if product.image %} {% comment %} <img src="{{ product.image.url }}" alt="{{ product.name }}" /> {% endcomment %}
+          <!-- Assuming 'product' is the object passed to the template -->
+          <img src="{{ product.image }}" alt="{{ product.name }}" />
           {% else %}
 
           <img src="{% static 'images/default_images/default_product_image.jpg' %}" alt="{{ product.name }}" />
